@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MAMA PING">
+
+<title>MAMA PING - Boutique de Layette</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<!-- Google Fonts pour une police plus douce et arrondie -->
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===== POLICES & COULEURS ===== */
+body {
+margin: 0;
+font-family: 'Quicksand', sans-serif;
+background: #fdfbfb; /* Un blanc très légèrement crémeux */
+padding-bottom: 90px;
+color: #3d2c4a; /* Violet très foncé pour le texte */
+}
+
+/* =============================================
+PAGE DE COUVERTURE (Avec l'image floue)
+============================================= */
+#pageCouverture {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 100vh;
+text-align: center;
+padding: 20px;
+background-image: url('fond-couverture.JPG');
+background-size: cover;
+background-position: center;
+color: #6A0DAD;
+}
+
+#pageCouverture .logo-splash {
+width: 140px; height: 140px; border-radius: 50%; border: 3px solid white;
+object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+margin-bottom: 15px;
+}
+
+#pageCouverture h1 {
+font-size: 2.8rem; margin: 0; font-weight: 700;
+text-shadow: 0 2px 10px rgba(255,255,255,0.6);
+}
+#pageCouverture p { font-size: 1.2rem; margin: 10px 0 30px; font-weight: 600; }
+
+.btn-entrer {
+background: white; color: #6A0DAD; border: none;
+padding: 15px 40px; border-radius: 50px; font-size: 1.1rem;
+font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+transition: transform 0.2s;
+}
+.btn-entrer:hover { transform: scale(1.05); }
+
+/* =============================================
+APPLICATION
+============================================= */
+#appContainer { display: none; }
+
+/* NAVIGATION (Moodboard) */
+nav {
+/* UTILISATION DE L'IMAGE 1 */
+background-image: url('fond-header.JPG');
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+padding: 15px 20px;
+display: flex; justify-content: space-between; align-items: center;
+position: sticky; top: 0; z-index: 1000;
+border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+
+.logo-container {
+display: flex; align-items: center; gap: 12px;
+color: #4a2c5e; font-weight: 700; font-size: 1.2rem;
+background: rgba(255, 255, 255, 0.5); /* Fond blanc translucide pour lisibilité */
+padding: 5px 12px; border-radius: 30px; backdrop-filter: blur(3px);
+}
+
+.logo-nav { width: 35px; height: 35px; border-radius: 50%; border: 2px solid white; object-fit: cover; }
+.menu-links a {
+color: #4a2c5e; text-decoration: none; font-weight: 700; font-size: 0.9rem;
+cursor: pointer; margin-left: 15px;
+background: rgba(255, 255, 255, 0.4); padding: 5px 10px; border-radius: 20px;
+}
+
+/* HERO */
+.hero {
+text-align: center; padding: 40px 20px;
+background: rgba(255, 245, 250, 0.6); /* Rose/pêche très clair */
+border-bottom: 1px solid #eee; margin-bottom: 20px;
+}
+.hero h1 { margin: 0; font-size: 2.2rem; color: #7b5ea7; font-weight: 700; }
+.hero p { margin-top: 10px; font-size: 1.1rem; color: #7b5ea7; }
+
+/* RECHERCHE */
+.search-box { max-width: 500px; margin: 0 auto 20px auto; padding: 0 20px; }
+.search-box input {
+width: 100%; padding: 12px 20px; border-radius: 50px;
+border: 2px solid #e8d5f5; background: white;
+font-size: 0.95rem; box-sizing: border-box; outline: none;
+}
+.search-box input:focus { border-color: #b392d0; }
+
+section { padding: 0 20px 30px 20px; text-align: center; max-width: 600px; margin: auto; }
+h2 { color: #7b5ea7; margin-bottom: 20px; font-weight: 700; font-size: 1.3rem; text-align: left; }
+
+/* ===== CATALOGUE ===== */
+.grid-produits { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+.carte-produit {
+background: #ffffff; border-radius: 24px; box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+text-align: center; overflow: hidden; transition: transform 0.2s;
+}
+.carte-produit:hover { transform: translateY(-5px); }
+.carte-produit img { width: 100%; height: 180px; object-fit: cover; display: block; }
+.info-produit { padding: 12px 10px 15px 10px; text-align: left; }
+.carte-produit h3 { margin: 0 0 5px 0; font-size: 0.95rem; font-weight: 700; color: #3d2c4a; }
+.carte-produit .prix { color: #7b5ea7; font-weight: 700; font-size: 1rem; }
+
+.btn-add-cart {
+background: #d4bce8; color: #3d2c4a; border: none;
+padding: 6px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+cursor: pointer; float: right; margin-top: 5px; transition: 0.2s;
+}
+.btn-add-cart:active { transform: scale(0.95); background: #c4a8da; }
+
+/* ===== PANIER (Le rond en bas à droite) ===== */
+.cart-fab {
+position: fixed; bottom: 30px; right: 20px;
+background: #d4bce8; color: #3d2c4a; width: 60px; height: 60px;
+border-radius: 50%; border: 2px solid white;
+box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+font-size: 1.5rem; cursor: pointer; z-index: 1500;
+display: flex; justify-content: center; align-items: center;
+}
+.cart-fab span {
+position: absolute; top: -5px; right: -5px;
+background: #ff6b8b; color: white; border-radius: 50%;
+width: 22px; height: 22px; font-size: 0.75rem;
+display: flex; justify-content: center; align-items: center;
+font-weight: bold; display: none;
+}
+
+/* ===== ADMIN (Fleurs violettes) ===== */
+#adminContent .hero {
+/* UTILISATION DE L'IMAGE 2 */
+background-image: url('fond-admin.JPG');
+background-size: cover;
+background-position: center;
+color: white; border: none; margin: 0; padding: 60px 20px;
+border-radius: 0 0 30px 30px;
+}
+#adminContent .hero h2 { color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+#adminContent .hero p { color: #ffeee6; }
+
+.box-admin {
+background: #ffffff; max-width: 500px; margin: 8px auto; padding: 10px;
+border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+border: 1px solid #f0e6f5; display: flex; justify-content: space-between; align-items: center
+}
+
+.box-admin .mini-img{
+    width: 30px; height: 30px;border-radius: 8px;object-fit: cover;margin-right: 10px;
+}
+.box-admin .nom-produit{font-size: 0.9rem; font: weight 700;}
+.box-admin .prix-produit{font-size: 0.75rem; color: #7b5ea7;}
+.btn-livrer { background: #d4bce8; color: #3d2c4a; border: none; padding: 2px 8px; border-radius: 50px; font-weight: 700; font-size: 0.6rem; cursor: pointer; }
+.stock-badge { background: #f0e6f5; padding: 2px 6px; border-radius: 50px; font-size: 0.6rem; font-weight: 700; color: #7b5ea7; display: inline-block; margin-right: 8px; }
+
+input, select { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #e8d5f5; border-radius: 16px; box-sizing: border-box; background: #fcfaff; font-size: 0.95rem; font-family: 'Quicksand'; }
+input:focus { border-color: #b392d0; outline: none; background: #fff; }
+.btn-ajouter { background: #7b5ea7; color: white; border: none; padding: 12px; width: 100%; border-radius: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+
+/* ===== MODALS ===== */
+.modal-overlay {
+display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+background: rgba(255,255,255,0.85); backdrop-filter: blur(5px);
+justify-content: center; align-items: center; z-index: 2000;
+} 
+.modal-box { background: white; padding: 30px; border-radius: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto;}
+.modal-box input { text-align: center; font-size: 1.5rem; letter-spacing: 8px; border: 2px solid #d4bce8; }
+.modal-box .btn-confirm { background: #7b5ea7; color: white; border: none; padding: 12px; width: 100%; border-radius: 16px; font-weight: 700; cursor: pointer; }
+.modal-box .btn-whatsapp-send { background: #25D366; color: white; border: none; padding: 12px; width: 100%; border-radius: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+.modal-box .error-msg { color: #ff6b8b; font-size: 0.9rem; margin-top: 10px; display: none; }
+
+.item-panier { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f0e6f5; text-align: left; font-weight: 600;}
+.item-panier .btn-remove { color: #ff6b8b; background: none; border: none; cursor: pointer; font-weight: bold; }
+
+footer { background: #ffffff; color: #888; text-align: center; padding: 5px; ;width: 100%; border-top: 1px solid #f0e6f5; font-size: 0.8rem; z-index: 5000; position: absolute; border-bottom: #eee; gap: 15px; display: block; justify-content: center;}
+#adminContent { display: none; }
+</style>
+</head>
+<body>
+
+<!-- ===== COUVERTURE ===== -->
+<div id="pageCouverture">
+<img src="images/logo-512.png.jpeg" alt="Logo" class="logo-splash" onerror="this.style.display='none'">
+<h1>MAMA PING</h1>
+<p>VOTRE BEBE RESPIRE NOUS AUSSI</p>
+<button class="btn-entrer" onclick="entrerDansBoutique()">
+<i class="fas fa-arrow-right"></i> Découvrir la boutique
+</button>
+</div>
+
+<!-- ===== APPLICATION ===== -->
+<div id="appContainer">
+<nav>
+<div class="logo-container">
+<img src="logo-512.png.jpeg" alt="Logo" class="logo-nav" onerror="this.style.display='none'">
+<span>MAMA PING-boutique de layette</span>
+</div>
+<div class="menu-links">
+<a href="#" onclick="afficherPage('client')">Accueil</a>
+<a href="#" onclick="ouvrirModal('modalConnexion')">Gestion</a>
+</div>
+</nav>
+
+
+<!-- MODAL CONNEXION -->
+<div class="modal-overlay" id="modalConnexion">
+<div class="modal-box">
+<h3 style="color: #7b5ea7; margin-top:0;">🔒 Accès</h3>
+<p style="color: #666; font-size: 0.9rem;">Code réservé à la boutique</p>
+<input type="password" id="inputCode" placeholder="****" maxlength="4">
+<button class="btn-confirm" onclick="verifierCode()">Déverrouiller</button>
+<p class="error-msg" id="erreurMessage">Code éronné.</p>
+<p style="margin-top: 15px; font-size: 0.8rem; cursor: pointer; color: #888;" onclick="fermerModal('modalConnexion')">Retour</p>
+</div>
+</div>
+
+<!-- MODAL PANIER -->
+<div class="modal-overlay" id="modalPanier">
+<div class="modal-box">
+<h3 style="color: #7b5ea7; margin-top:0;">🛒Votre Panier</h3>
+<div id="listePanier"></div>
+<p id="totalPanier" style="font-weight:bold; margin-top:15px;">Total: 0 FCFA</p>
+<button class="btn-whatsapp-send" onclick="envoyerCommande()"><i class="fab fa-whatsapp"></i> Commander sur WhatsApp</button>
+<p style="margin-top: 15px; font-size: 0.8rem; cursor: pointer; color: #888;" onclick="fermerModal('modalPanier')">Fermer</p>
+</div>
+</div>
+
+<!-- CLIENT -->
+<div id="clientContent">
+<div class="hero">
+<h1 id="title">MAMA PING</h1>
+<p>Layette & Accessoires Bébé</p>
+</div>
+<section id="catalogue">
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="🔍 Rechercher un article..." onkeyup="filtrerProduits()">
+</div>
+<h2>Nos Articles</h2>
+<div class="grid-produits" id="listeCatalogue"></div>
+</section>
+</div>
+
+<!-- ADMIN -->
+<div id="adminContent">
+<div class="hero">
+<h2 style="color:white; margin:0;">📦 Gestion Stock</h2>
+<p style="color:rgba(255,255,255,0.9); margin:5px 0 0;">Réservé à l'équipe</p>
+</div>
+<section>
+<div style="background:white; padding:20px; border-radius:20px; box-shadow:0 4px 15px rgba(0,0,0,0.03); margin-bottom:20px;">
+<h3 style="color:#7b5ea7; margin-top:0;">➕ Nouvel article</h3>
+<input type="text" id="nomNouveau" placeholder="Nom du produit">
+<input type="number" id="prixNouveau" placeholder="Prix (FCFA)">
+<input type="number" id="stockNouveau" placeholder="Quantité">
+<input type="text" id="imageNouveau" placeholder="Nom image (ex: biberons.jpg)">
+<button class="btn-ajouter" onclick="ajouterNouveauProduit()">Ajouter</button>
+</div>
+<h2 style="text-align:left;">Stock actuel</h2>
+<div id="listeStockAdmin"></div>
+<button onclick="afficherPage('client')" style="background:#f0e6f5; border:none; padding:12px; border-radius:16px; font-weight:700; cursor:pointer; width:100%; margin-top:20px; color:#4a2c5e;">⬅️ Retour</button>
+</section>
+</div>
+
+<!-- BOUTON PANIER -->
+<button class="cart-fab" onclick="ouvrirModal('modalPanier')">
+<i class="fas fa-shopping-cart"></i>
+<span id="cartCount">0</span>
+</button>
+
+<footer> <p>© MAMA PING - Tous droits réservés</p> <p>Contact Us - 655796140</p> </footer>
+</div>
+
+<script>
+/* =============================================
+DONNÉES ET LOGIQUE
+============================================= */
+
+// Liste des produits
+let produits = [
+{ id: 1, nom: "Bonnets garcons", prix: 1000, stock: 20 , image: "bonnet ours garcon.JPEG" },
+{ id: 2, nom: "Kit naissance", prix: 7500, stock: 50, image: "kit naissance bb cherie.JPEG" },
+{ id: 3, nom: "Bonnets-Chaussettes", prix: 2500, stock: 5, image: "pack bonnet.JPEG" },
+{ id: 4, nom: "Serviette sortie de bain", prix: 1500, stock: 30, image: "sorties de bain f.JPEG" },
+ {id: 5, nom: "sacs a langer", prix: 2500, stock: 50, image: "sac a langer.JPEG"},
+ {id: 6, nom: "robes rayurres", prix: 5000, stock: 50, image: "robe reilure rose .JPEG"},
+{id: 7, nom:"cintres de 5 barboteuses courtes manches garcon",prix:2500, stock:50, image:"cintres de 5 barb cm.JPEG"},
+{id: 8, nom:"barboteuses longue manches fille",prix:2500, stock:50, image:"cintre 3 barb lm.JPEG"},
+{id: 9, nom:"pack bonnets-chaussettes",prix:5000, stock:50, image:"pack bonnet chausettes.JPEG"},
+{id: 10, nom:"barboteuses longue manches garcon",prix:2500, stock:50, image:"cintre 3 barb lm g.JPEG"},
+];
+// Panier
+let panier = [];
+
+function entrerDansBoutique() {
+document.getElementById('pageCouverture').style.display = 'none';
+document.getElementById('appContainer').style.display = 'block';
+afficherCatalogue();
+}
+
+function ouvrirModal(id) { document.getElementById(id).style.display = 'flex'; if(id === 'modalPanier') afficherPanier(); }
+function fermerModal(id) { document.getElementById(id).style.display = 'none'; }
+
+/* CATALOGUE */
+function afficherCatalogue(produitsAAfficher = null) {
+const data = produitsAAfficher || produits;
+const conteneur = document.getElementById('listeCatalogue');
+conteneur.innerHTML = '';
+data.forEach((p, index) => {
+const carte = document.createElement('div');
+carte.className = 'carte-produit';
+carte.style.opacity = "0"; carte.style.transform = "translateY(20px)"; carte.style.transition = "0.4s";
+const inCart = panier.some(item => item.id === p.id);
+
+carte.innerHTML = `
+<img src="images/${p.image}" alt="${p.nom}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100\' height=\'100\' fill=\'%23fcfaff\'/></svg>'">
+<div class="info-produit">
+<h3>${p.nom}</h3>
+<div>
+<span class="prix">${p.prix} FCFA</span>
+${p.stock > 0 ? `<button class="btn-add-cart" onclick="ajouterAuPanier(${p.id})">${inCart ? '✅' : '🛒 Ajouter'}</button>` : `<button style="background:#f0e6f5; color:#7b5ea7; border:none; padding:6px 12px; border-radius:50px; font-size:0.75rem; float:right; margin-top:5px; font-weight:700;">Rupture</button>`}
+</div>
+</div>
+`;
+conteneur.appendChild(carte);
+setTimeout(() => { carte.style.opacity = "1"; carte.style.transform = "translateY(0)"; }, index * 100);
+});
+}
+
+function filtrerProduits() {
+const texte = document.getElementById('searchInput').value.toLowerCase();
+const filtres = produits.filter(p => p.nom.toLowerCase().includes(texte));
+afficherCatalogue(filtres);
+}
+
+/* PANIER */
+function ajouterAuPanier(id) {
+const produit = produits.find(p => p.id === id);
+if(!panier.some(item => item.id === id)) {
+panier.push(produit);
+document.getElementById('cartCount').style.display = 'flex';
+document.getElementById('cartCount').innerText = panier.length;
+afficherCatalogue();
+}
+}
+
+function retirerDuPanier(id) {
+panier = panier.filter(item => item.id !== id);
+document.getElementById('cartCount').innerText = panier.length;
+if(panier.length === 0) document.getElementById('cartCount').style.display = 'none';
+afficherPanier();
+afficherCatalogue();
+}
+
+function afficherPanier() {
+const conteneur = document.getElementById('listePanier');
+conteneur.innerHTML = '';
+let total = 0;
+panier.forEach(p => {
+total += p.prix;
+conteneur.innerHTML += `
+<div class="item-panier">
+<span><strong>${p.nom}</strong> - ${p.prix} FCFA</span>
+<button class="btn-remove" onclick="retirerDuPanier(${p.id})">✕</button>
+</div>
+`;
+});
+document.getElementById('totalPanier').innerText = `Total: ${total} FCFA`;
+}
+
+function envoyerCommande() {
+if(panier.length === 0) { alert("Votre panier est vide !"); return; }
+let message = "Bonjour MAMA PING 🌸, je souhaite commander :\n\n";
+panier.forEach(p => { message += `- ${p.nom} : ${p.prix} FCFA\n`; });
+message += `\nTotal : ${panier.reduce((sum, p) => sum + p.prix, 0)} FCFA`;
+
+const numero = "+237655796140/+237675615661";
+const url = `https://wa.me/${numero}?text=${encodeURIComponent(message)}`;
+window.open(url, '_blank');
+fermerModal('modalPanier');
+}
+
+/* ADMIN */
+function afficherAdmin() {
+const conteneur = document.getElementById('listeStockAdmin');
+conteneur.innerHTML = '';
+produits.forEach(p => {
+const div = document.createElement('div');
+div.className = 'box-admin';
+div.innerHTML = `
+<div style="display:flex; align-items:center;">
+<img src="images/${p.image}" class="mini-img" onerror="this.style.display='none'">
+<div><strong>${p.nom}</strong><br><span style="font-size:0.85rem; color:#7b5ea7;">${p.prix} FCFA</span></div>
+</div>
+<div style="text-align:right;">
+<div><span class="stock-badge" id="stock-${p.id}">${p.stock}</span></div>
+<button class="btn-livrer" onclick="livrerProduit(${p.id})">✅ Livré</button>
+</div>
+`;
+conteneur.appendChild(div);
+});
+}
+
+function livrerProduit(id) {
+const produit = produits.find(p => p.id === id);
+if(produit.stock > 0) {
+produit.stock = produit.stock - 1;
+document.getElementById(`stock-${id}`).innerText = `${produit.stock}`;
+if(panier.some(item => item.id === id)) retirerDuPanier(id);
+afficherCatalogue();
+} else alert("Rupture de stock !");
+}
+
+function  ajouterNouveauProduit() {
+const nom = document.getElementById('nomNouveau').value;
+const prix = parseInt(document.getElementById('prixNouveau').value);
+const stock = parseInt(document.getElementById('stockNouveau').value);
+const image = (document.getElementById('imageNouveau').value);
+if(nom === '' || isNaN(prix) || isNaN(stock)) { alert("Veuillez remplir tous les champs !"); return; }
+const nouvelId = produits.length > 0 ? produits[produits.length - 1].id + 1 : 1;
+produits.push({ id: nouvelId, nom: nom, prix: prix, stock: stock, image: image });
+document.getElementById('nomNouveau').value = ''; document.getElementById('prixNouveau').value = ''; document.getElementById('stockNouveau').value = ''; document.getElementById('imageNouveau').value = '';
+afficherAdmin(); afficherCatalogue();
+}
+
+function afficherPage(page) {
+document.getElementById('clientContent').style.display = (page === 'client') ? 'block' : 'none';
+document.getElementById('adminContent').style.display = (page === 'admin') ? 'block' : 'none';
+if(page === 'client') afficherCatalogue();
+if(page === 'admin') afficherAdmin();
+}
+
+/* CODES */
+const CODE_SECRET = "2023";
+function verifierCode() {
+if(document.getElementById('inputCode').value === CODE_SECRET) {
+fermerModal('modalConnexion');
+afficherPage('admin');
+} else {
+document.getElementById('erreurMessage').style.display = 'block';
+document.getElementById('inputCode').style.borderColor = "#ff6b8b";
+}
+}
+document.getElementById('inputCode').addEventListener("keypress", function(e) { if (e.key === "Enter") verifierCode(); });
+</script>
+</body>
+</html>
